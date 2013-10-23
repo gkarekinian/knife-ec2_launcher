@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
                  end
   spec.add_dependency "knife-ec2", "~> 0.6.4"
   spec.add_dependency "chef",      chef_version
+  spec.add_dependency "toml",      "~> 0.0.4"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake",    "~> 10.1.0"

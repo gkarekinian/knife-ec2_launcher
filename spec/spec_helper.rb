@@ -3,7 +3,7 @@ $:.unshift File.expand_path('../../lib', __FILE__)
 require 'simplecov'
 SimpleCov.start
 
-require 'chef/knife/ec2_launcher'
+require 'knife-ec2_launcher'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|

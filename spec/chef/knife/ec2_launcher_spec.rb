@@ -17,8 +17,32 @@ describe Chef::Knife::Ec2ServerFromProfile do
     DummyEc2ServerCreate.new
   end
 
+  let :profiles do
+    profiles = double(:all         => ['test', 'test2'],
+                      :config_file => yaml_config_path)
+    allow(profiles).to receive(:[]).with('test').and_return(
+      { "security_groups" => ["dev"],
+        "run_list" => ["recipe[build-essential]", "role[base]"],
+        "environment" => "dev",
+        "distro" => "chef-full",
+        "image" => "ami-0dadba79",
+        "flavor" => "m1.small" }
+    )
+    allow(profiles).to receive(:[]).with('test_2').and_return(
+      { "security_groups" => ["prod"],
+        "run_list" => ["recipe[build-essential]", "role[base]", "role[webserver]"],
+        "environment" => "prod",
+        "distro" => "chef-full",
+        "image" => "ami-0dadba79",
+        "flavor" => "c1.medium" }
+    )
+
+    profiles
+  end
+
   let :launcher do
-    described_class.new(argv, ec2_server_create)
+    described_class.new(argv, :ec2_server_create => ec2_server_create,
+                        :profiles          => profiles)
   end
 
   context 'when passing a node_name' do
